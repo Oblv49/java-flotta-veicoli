@@ -7,8 +7,10 @@ public class Motocicletta extends Veicolo{
     private boolean cavallettoSi;
 
     //constructor
-    public Motocicletta(String targa, LocalDate annoDiImmatricolazione, boolean cavallettoSi) {
-        super(targa, annoDiImmatricolazione);
+
+
+    public Motocicletta(String nome, String targa, LocalDate annoDiImmatricolazione, boolean cavallettoSi) {
+        super(nome, targa, annoDiImmatricolazione);
         this.cavallettoSi = cavallettoSi;
     }
 
@@ -26,9 +28,8 @@ public class Motocicletta extends Veicolo{
 
     @Override
     public String toString() {
-        super.toString();
-        return "Motocicletta{" +
-                "cavallettoSi=" + cavallettoSi +
-                '}';
+        return "Motocicletta: " +
+                "con cavalletto= " + cavallettoSi +
+                '.';
     }
 }

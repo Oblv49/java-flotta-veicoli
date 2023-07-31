@@ -7,14 +7,16 @@ public class Automobile extends Veicolo{
     private int nPorte;
 
     //constructor
-    public Automobile(String targa, LocalDate annoDiImmatricolazione, int nPorte) {
-        super(targa, annoDiImmatricolazione);
+
+
+    public Automobile(String nome, String targa, LocalDate annoDiImmatricolazione, int nPorte) {
+        super(nome, targa, annoDiImmatricolazione);
         this.nPorte = nPorte;
     }
 
     //getter and setter
         //get
-    public int getnPorte() {
+    public int getNPorte() {
         return nPorte;
     }
         //set
@@ -25,10 +27,8 @@ public class Automobile extends Veicolo{
     //tostring
     @Override
     public String toString() {
-        super.toString();
         return "Automobile: " +
-                "nPorte= " + nPorte +
+                "numero porte= " + nPorte +
                 '.';
     }
-
 }

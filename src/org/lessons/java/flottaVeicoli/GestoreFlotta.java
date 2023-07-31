@@ -3,6 +3,7 @@ package org.lessons.java.flottaVeicoli;
 import java.util.ArrayList;
 
 public class GestoreFlotta {
+
     //variables
     private ArrayList<Veicolo> veicoli = new ArrayList<>();
 
@@ -29,41 +30,42 @@ public class GestoreFlotta {
                 '}';
     }
 
-    //method
-    //aggiunge veicolo
-    public void aggiungiVeicolo(Veicolo veicolo) {
-        veicoli.add(veicolo);
-    }
-    //conta numero di motociclette
-    public int contaMotociclette() {
-        int conteggioMotociclette = 0;
-        for (Veicolo veicolo : veicoli) {
-            if (veicolo instanceof Motocicletta) {
-                conteggioMotociclette++;
-            }
-        }
-        return conteggioMotociclette;
-    }
 
-    //conta numeri di automobili
-    public int contaAutomobili() {
-        int conteggioAutomobili = 0;
-        for (Veicolo veicolo : veicoli) {
-            if (veicolo instanceof Automobile) {
-                conteggioAutomobili++;
-            }
+    //methods
+        //aggiunge veicolo
+        public void aggiungiVeicolo(Veicolo veicolo) {
+            veicoli.add(veicolo);
         }
-        return conteggioAutomobili;
-    }
+        //conta numero di motociclette
+        public int contaMotociclette() {
+            int conteggioMotociclette = 0;
+            for (Veicolo veicolo : veicoli) {
+                if (veicolo instanceof Motocicletta) {
+                    conteggioMotociclette++;
+                }
+            }
+            return conteggioMotociclette;
+        }
 
-    //ricerca per targa
-    public Veicolo cercaVeicoloPerTarga(String targa) {
-        for (Veicolo veicolo : veicoli) {
-            if (veicolo.getTarga().equals(targa)) {
-                return veicolo;
+        //conta numeri di automobili
+        public int contaAutomobili() {
+            int conteggioAutomobili = 0;
+            for (Veicolo veicolo : veicoli) {
+                if (veicolo instanceof Automobile) {
+                    conteggioAutomobili++;
+                }
             }
+            return conteggioAutomobili;
         }
-        return null;
-    }
+
+        //ricerca per targa
+        public Veicolo cercaVeicoloPerTarga(String targa) {
+            for (Veicolo veicolo : veicoli) {
+                if (veicolo.getTarga().equals(targa)) {
+                    return veicolo;
+                }
+            }
+            return null;
+        }
 
 }

@@ -29,11 +29,13 @@ import java.time.LocalDate;
 */
 public class Veicolo {
     //variables
+    private String nome;
     private String  targa;
     private LocalDate annoDiImmatricolazione;
 
     //constructor
-    public Veicolo(String targa, LocalDate annoDiImmatricolazione) {
+    public Veicolo(String nome, String targa, LocalDate annoDiImmatricolazione) {
+        this.nome = nome;
         this.targa = targa;
         this.annoDiImmatricolazione = annoDiImmatricolazione;
     }
@@ -46,7 +48,15 @@ public class Veicolo {
     public LocalDate getAnnoDiImmatricolazione() {
         return annoDiImmatricolazione;
     }
-        //set
+    public String getNome() {
+        return nome;
+    }
+
+         //set
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     public void setTarga(String targa) {
         this.targa = targa;
     }
@@ -55,13 +65,13 @@ public class Veicolo {
     }
 
 
-    //tostring
     @Override
     public String toString() {
         return "Veicolo: " +
-                "targa= " + targa + " , " +
-                "annoDiImmatricolazione= " + annoDiImmatricolazione +
-                '.';
+                "nome= " + nome +
+                ", targa= " + targa +
+                ", anno di immatricolazione=" + annoDiImmatricolazione +
+                ", ";
     }
 
 }
