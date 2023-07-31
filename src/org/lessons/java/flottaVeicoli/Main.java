@@ -36,14 +36,28 @@ public class Main {
         System.out.println("Benvenuto nel Gestionale DElla FlottaVeicoli.");
         System.out.println("---------------------------------------------");
         System.out.println("Tutti i veicoli presenti:");
+        System.out.println("---------------------------------------------");
         for (Veicolo veicolo : veicoli) {
             System.out.println("Il Veicolo: " + veicolo.getNome() + " " + " con Targa: " + veicolo.getTarga());
+            if (veicolo instanceof Automobile) {
+                System.out.println("Tipo: Automobile");
+                Automobile automobile = (Automobile) veicolo;
+                System.out.println("Numero di porte: " + automobile.getNPorte());
+                System.out.println("---------------------------------------------");
+            } else if (veicolo instanceof Motocicletta) {
+                System.out.println("Tipo: Motocicletta");
+                Motocicletta motocicletta = (Motocicletta) veicolo;
+                System.out.println("Cavalletto: " + motocicletta.isCavallettoSi());
+                System.out.println("---------------------------------------------");
+            }
         }
+        System.out.println("---------------------------------------------");
         do {
             System.out.println("Cosa desideri fare?");
             System.out.println("1. Contare i veicoli");
             System.out.println("2. Cercare un veicolo tramite targa");
             System.out.println("3. Aggiungere un veicolo");
+            System.out.println("4. Stampa tutti i veicoli.");
             System.out.println("0. Uscire");
 
             userChoose = input.nextInt();
@@ -133,7 +147,12 @@ public class Main {
                         } catch (DateTimeParseException e) {
                             System.out.println("Data di immatricolazione non valida. Inserisci una data valida (anno mese giorno).");
                             input.nextLine();
+                        } catch (InputMismatchException e) {
+                            System.out.println("Input non valido. Inserisci un numero intero per l'anno, il mese e il giorno.");
+                            input.nextLine();
+
                         }
+
                     }
 
                     System.out.println("Tipo di veicolo (1 per Automobile, 2 per Motocicletta):");
@@ -161,14 +180,19 @@ public class Main {
                     } else if (tipo == 2) {
                         boolean cavalletto = false;
                         boolean cavallettoValido = false;
+                        input.nextLine();
                         while (!cavallettoValido) {
                             try {
                                 System.out.println("Cavalletto (true o false):");
-                                cavalletto = Boolean.parseBoolean(input.next());
-                                cavallettoValido = true;
+                                String inputString = input.nextLine().toLowerCase();
+                                if (inputString.equals("true") || inputString.equals("false")) {
+                                    cavalletto = Boolean.parseBoolean(inputString);
+                                    cavallettoValido = true;
+                                } else {
+                                    System.out.println("Valore del cavalletto non valido. Inserisci 'true' o 'false'.");
+                                }
                             } catch (IllegalArgumentException e) {
-                                System.out.println("Valore del cavalletto non valido. Inserisci 'true' o 'false'.");
-                                input.nextLine();
+                                System.out.println("Errore nell'input del cavalletto.");
                             }
                         }
                         Veicolo nuovaMotocicletta = new Motocicletta(nomeVeicolo, targa, LocalDate.of(anno, mese, giorno), cavalletto);
@@ -176,6 +200,24 @@ public class Main {
                         System.out.println("---------------------------------------------");
                     } else {
                         System.out.println("Tipo di veicolo non valido.");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Ecco tutti i veicoli:");
+                    System.out.println("---------------------------------------------");
+                    for (Veicolo veicolo : veicoli) {
+                        System.out.println("Il Veicolo: " + veicolo.getNome() + " " + " con Targa: " + veicolo.getTarga());
+                        if (veicolo instanceof Automobile) {
+                            System.out.println("Tipo: Automobile");
+                            Automobile automobile = (Automobile) veicolo;
+                            System.out.println("Numero di porte: " + automobile.getNPorte());
+                            System.out.println("---------------------------------------------");
+                        } else if (veicolo instanceof Motocicletta) {
+                            System.out.println("Tipo: Motocicletta");
+                            Motocicletta motocicletta = (Motocicletta) veicolo;
+                            System.out.println("Cavalletto: " + motocicletta.isCavallettoSi());
+                            System.out.println("---------------------------------------------");
+                        }
                     }
                     break;
                 case 0:
