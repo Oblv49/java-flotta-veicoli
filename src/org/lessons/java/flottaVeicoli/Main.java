@@ -168,7 +168,7 @@ public class Main {
                                 cavallettoValido = true;
                             } catch (IllegalArgumentException e) {
                                 System.out.println("Valore del cavalletto non valido. Inserisci 'true' o 'false'.");
-                                input.nextLine(); // Consuma l'input errato
+                                input.nextLine();
                             }
                         }
                         Veicolo nuovaMotocicletta = new Motocicletta(nomeVeicolo, targa, LocalDate.of(anno, mese, giorno), cavalletto);
