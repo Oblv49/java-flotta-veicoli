@@ -1,7 +1,10 @@
 package org.lessons.java.flottaVeicoli;
 
+
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -96,31 +99,81 @@ public class Main {
                     System.out.println("---------------------------------------------");
                     System.out.println("Nome del veicolo:");
                     String nomeVeicolo = input.next();
-                    System.out.println("Targa:");
-                    String targa = input.next();
-                    System.out.println("Anno di immatricolazione (yyyy):");
-                    int anno = input.nextInt();
-                    System.out.println("Mese di immatricolazione (mm):");
-                    int mese = input.nextInt();
-                    System.out.println("Giorno di immatricolazione (dd):");
-                    int giorno = input.nextInt();
-                    LocalDate dataImmatricolazione = LocalDate.of(anno, mese, giorno);
+                    // Controllo per targa già presente
+                    String targa;
+                    boolean targaDuplicata;
+                    do {
+                        System.out.println("Targa:");
+                        targa = input.next();
+                        targaDuplicata = flotta.targaGiaPresente(targa);
+                        if (targaDuplicata) {
+                            System.out.println("Targa già presente. Inserisci una targa diversa.");
+                        }
+                    } while (targaDuplicata);
+                    //controllo errori data
+                    int anno = 0;
+                    int mese = 0;
+                    int giorno = 0;
+                    boolean dataImmatricolazioneValida = false;
+                    while (!dataImmatricolazioneValida) {
+                        try {
+                            System.out.println("Anno di immatricolazione (yyyy):");
+                            anno = input.nextInt();
+                            System.out.println("Mese di immatricolazione (mm):");
+                            mese = input.nextInt();
+                            System.out.println("Giorno di immatricolazione (dd):");
+                            giorno = input.nextInt();
+                            // Verifica che il mese sia compreso tra 1 e 12 e il giorno tra 1 e 31
+                            if (mese >= 1 && mese <= 12 && giorno >= 1 && giorno <= 31) {
+                                LocalDate dataImmatricolazione = LocalDate.of(anno, mese, giorno);
+                                dataImmatricolazioneValida = true;
+                            } else {
+                                System.out.println("Data di immatricolazione non valida. Inserisci una data valida (anno mese giorno).");
+                            }
+                        } catch (DateTimeParseException e) {
+                            System.out.println("Data di immatricolazione non valida. Inserisci una data valida (anno mese giorno).");
+                            input.nextLine();
+                        }
+                    }
+
                     System.out.println("Tipo di veicolo (1 per Automobile, 2 per Motocicletta):");
                     int tipo = input.nextInt();
                     if (tipo == 1) {
-                        System.out.println("Numero di porte:");
-                        int nPorte = input.nextInt();
-                        Veicolo nuovaAutomobile = new Automobile(nomeVeicolo, targa, dataImmatricolazione, nPorte);
+                        int nPorte = 0;
+                        boolean numeroPorteValido = false;
+                        while (!numeroPorteValido) {
+                            try {
+                                System.out.println("Numero di porte (tra 3 e 5): ");
+                                nPorte = input.nextInt();
+                                if (nPorte >= 3 && nPorte <= 5) {
+                                    numeroPorteValido = true;
+                                } else {
+                                    System.out.println("Numero di porte non valido. Inserisci un numero compreso tra 3 e 5.");
+                                }
+                            } catch (InputMismatchException e) {
+                                System.out.println("Numero di porte non valido. Inserisci un numero intero.");
+                                input.nextLine();
+                            }
+                        }
+                        Veicolo nuovaAutomobile = new Automobile(nomeVeicolo, targa, LocalDate.of(anno, mese, giorno), nPorte);
                         flotta.aggiungiVeicolo(nuovaAutomobile);
                         System.out.println("---------------------------------------------");
-
                     } else if (tipo == 2) {
-                        System.out.println("Cavalletto (true o false):");
-                        boolean cavalletto = input.nextBoolean();
-                        Veicolo nuovaMotocicletta = new Motocicletta(nomeVeicolo, targa, dataImmatricolazione, cavalletto);
+                        boolean cavalletto = false;
+                        boolean cavallettoValido = false;
+                        while (!cavallettoValido) {
+                            try {
+                                System.out.println("Cavalletto (true o false):");
+                                cavalletto = Boolean.parseBoolean(input.next());
+                                cavallettoValido = true;
+                            } catch (IllegalArgumentException e) {
+                                System.out.println("Valore del cavalletto non valido. Inserisci 'true' o 'false'.");
+                                input.nextLine(); // Consuma l'input errato
+                            }
+                        }
+                        Veicolo nuovaMotocicletta = new Motocicletta(nomeVeicolo, targa, LocalDate.of(anno, mese, giorno), cavalletto);
                         flotta.aggiungiVeicolo(nuovaMotocicletta);
                         System.out.println("---------------------------------------------");
-
                     } else {
                         System.out.println("Tipo di veicolo non valido.");
                     }

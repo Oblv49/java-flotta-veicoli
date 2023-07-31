@@ -30,7 +30,6 @@ public class GestoreFlotta {
                 '}';
     }
 
-
     //methods
         //aggiunge veicolo
         public void aggiungiVeicolo(Veicolo veicolo) {
@@ -68,4 +67,12 @@ public class GestoreFlotta {
             return null;
         }
 
+    public boolean targaGiaPresente(String targa) {
+        for (Veicolo veicolo : veicoli) {
+            if (veicolo.getTarga().equals(targa)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
